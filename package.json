@@ -1,0 +1,16 @@
+{
+  "name": "proyectoclase",
+  "version": "1.0.0",
+  "description": "Proyecto Node JS clase NoSQL",
+  "main": "server",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose" : "^8.5.1",
+    "bootstrap": "^5.3.3",
+    "express": "^4.19.2"
+  }
+}
