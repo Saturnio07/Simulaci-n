@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path'); 
 
 // Conectar a la base de datos
-const connectDB = require('../ProyectoClase/conexionMongoDB');
+const connectDB = require('../Simulaci-n/conexionMongoDB');
 connectDB();
 
 // Modelos y Rutas
@@ -27,6 +27,8 @@ app.get('/', (req, res) => {
 });
 
 // Rutas para usuarios
+
+// ver usuarios
 app.get('/usuario', async (req, res) => {
     try {
         const usuario = await Usuario.find();
@@ -35,7 +37,7 @@ app.get('/usuario', async (req, res) => {
         res.status(500).json({message: error.message});
     }
 });
-
+// agregar usuarios
 app.post('/usuario', async (req, res) => {
     try {
         const newusuario =  new Usuario(req.body);
@@ -47,8 +49,42 @@ app.post('/usuario', async (req, res) => {
     }
 }
 );
+// actualizar usuarios
+app.put('/usuario/:id', async (req, res) => {
+    try {
+        const usuario = await Usuario.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+
+        if(!usuario) {
+            res.status(404).json({message: "Elemento no encontrado"});
+        }
+
+        res.json(usuario);
+    } catch (error) {
+        res.status(400).json({message: error.message});
+        
+    }
+}
+);
+// eliminar usuarios
+app.delete('/usuario/:id', async (req, res) => {
+    try {
+        const usuario = await Usuario.findByIdAndDelete(req.params.id);
+
+        if(!usuario) {
+            res.status(404).json({message: "Elemento no encontrado"});
+        }
+
+        res.json({message: "Elemento eliminado"});
+    } catch (error) {
+        res.status(400).json({message: error.message});
+        
+    }
+}
+);
 
 // Rutas para Libros
+
+// ver libros
 app.get('/libro', async (req, res) => {
     try {
         const libro = await Libro.find();
@@ -57,7 +93,7 @@ app.get('/libro', async (req, res) => {
         res.status(500).json({message: error.message});
     }
 });
-
+// agregar libros
 app.post('/libro', async (req, res) => {
     try {
         const newlibro =  new Libro(req.body);
@@ -69,8 +105,42 @@ app.post('/libro', async (req, res) => {
     }
 }
 );
+// actualizar libros
+app.put('/libro/:id', async (req, res) => {
+    try {
+        const libro = await Libro.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+
+        if(!libro) {
+            res.status(404).json({message: "Elemento no encontrado"});
+        }
+
+        res.json(libro);
+    } catch (error) {
+        res.status(400).json({message: error.message});
+        
+    }
+}
+);
+// eliminar libros
+app.delete('/libro/:id', async (req, res) => {
+    try {
+        const libro = await Libro.findByIdAndDelete(req.params.id);
+
+        if(!libro) {
+            res.status(404).json({message: "Elemento no encontrado"});
+        }
+
+        res.json({message: "Elemento eliminado"});
+    } catch (error) {
+        res.status(400).json({message: error.message});
+        
+    }
+}
+);
 
 // Rutas para préstamos
+
+// ver préstamos
 app.get('/prestamo', async (req, res) => {
     try {
         const prestamo = await Prestamo.find();
@@ -79,7 +149,7 @@ app.get('/prestamo', async (req, res) => {
         res.status(500).json({message: error.message});
     }
 });
-
+// agregar préstamos
 app.post('/prestamo', async (req, res) => {
     try {
         const newprestamo =  new Prestamo(req.body);
@@ -91,7 +161,38 @@ app.post('/prestamo', async (req, res) => {
     }
 }
 );
+// actualizar préstamos
+app.put('/prestamo/:id', async (req, res) => {
+    try {
+        const prestamo = await Prestamo.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
 
+        if(!prestamo) {
+            res.status(404).json({message: "Elemento no encontrado"});
+        }
+
+        res.json(prestamo);
+    } catch (error) {
+        res.status(400).json({message: error.message});
+        
+    }
+}
+);
+// eliminar préstamos
+app.delete('/prestamo/:id', async (req, res) => {
+    try {
+        const prestamo = await Prestamo.findByIdAndDelete(req.params.id);
+
+        if(!prestamo) {
+            res.status(404).json({message: "Elemento no encontrado"});
+        }
+
+        res.json({message: "Elemento eliminado"});
+    } catch (error) {
+        res.status(400).json({message: error.message});
+        
+    }
+}
+);
 // Iniciar servidor
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`); 
